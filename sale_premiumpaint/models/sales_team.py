@@ -15,7 +15,7 @@ class SaleOrder(models.Model):
 
     warehouse_id = fields.Many2one(
         'stock.warehouse', string='Warehouse',
-        required=True, readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
+        readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
         default=_default_warehouse_id)
 
 
