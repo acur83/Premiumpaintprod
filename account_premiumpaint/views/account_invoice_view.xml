@@ -10,8 +10,19 @@
         <label for="fiscal_printer_status" states="open,paid"/>
         <div class="o_row">
           <field name="fiscal_printer_status" states="open,paid"/>
-          <button name="send_invoice_proxy" string="Enviar Impresora Fiscal" class="oe_link" type="object" groups="account.group_account_invoice" attrs="{'invisible':[('fiscal_printer_status', 'in', ['printed']),('state', 'in', ['draft','cancel'])]}"/>
+          <button name="send_invoice_proxy" string="Enviar Impresora Fiscal" class="oe_link" type="object" groups="account.group_account_invoice" attrs="{'invisible':[('state', 'in', ['draft','cancel'])]}"/>
         </div>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="view_payment_term_form" model="ir.ui.view">
+    <field name="name">account.payment.term.form.premiumpaint</field>
+    <field name="model">account.payment.term</field>
+    <field name="inherit_id" ref="account.view_payment_term_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='active']" position="after">
+        <field name="fiscal_payment" groups="base.group_no_one"/>
       </xpath>
     </field>
   </record>

@@ -3,6 +3,28 @@ from base64 import b64decode, b64encode
 from odoo import api, fields, models
 
 
+class AccountPaymentTerm(models.Model):
+    _inherit = "account.payment.term"
+
+    fiscal_payment = fields.Selection([
+            ('01', 'Efectivo'),
+            ('02', 'Efectivo'),
+            ('03', 'Efectivo'),
+            ('04', 'Efectivo'),
+            ('05', 'Cheque'),
+            ('06', 'Cheque'),
+            ('07', 'Cheque'),
+            ('08', 'Cheque'),
+            ('09', 'Tarjeta 1'),
+            ('10', 'Tarjeta 1'),
+            ('11', 'Tarjeta 1'),
+            ('12', 'Tarjeta 1'),
+            ('13', 'Tarjeta 2'),
+            ('14', 'Tarjeta 2'),
+            ('15', 'Tarjeta 2'),
+            ('16', 'Credito')
+        ], string='Medio de Pago', required=True, default=lambda *a:'01')
+
 class AccountInvoice(models.Model):
     _inherit = "account.invoice"
 
@@ -25,7 +47,7 @@ class AccountInvoice(models.Model):
             else:
                 tmp = '\n {:011.2f}{:09.3f}{}'.format(line.price_unit, line.quantity, line.name.replace('\n','')[:117])
                 cmd += tmp.replace('.','')
-        cmd += "\n3\n101"
+        cmd += "\n3\n1%s"%(self.payment_term_id and self.payment_term_id.fiscal_payment or '01')
         cmd = b64encode(cmd.encode('utf-8'))
         self.fiscal_printer_status = 'sent'
         return {
