@@ -50,8 +50,10 @@ class AccountInvoice(models.Model):
         cmd += "\n3\n1%s"%(self.payment_term_id and self.payment_term_id.fiscal_payment or '01')
         cmd = b64encode(cmd.encode('utf-8'))
         self.fiscal_printer_status = 'sent'
+        proxy_url = self.env['ir.config_parameter'].sudo().get_param(
+            'fiscal.printer.proxy.url', 'http://127.0.0.1:8080')
         return {
             'type': 'ir.actions.act_url',
             'target': 'self',
-            'url': 'http://127.0.0.1:8080/sendcmd/%s'%(cmd.decode("utf-8"),),
+            'url': '%s/sendcmd/%s'%(proxy_url, cmd.decode("utf-8"),),
         }
