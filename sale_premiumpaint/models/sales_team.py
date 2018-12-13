@@ -23,4 +23,3 @@ class CrmTeam(models.Model):
     _inherit = 'crm.team'
 
     warehouse_id = fields.Many2one('stock.warehouse', 'Warehouse')
- 

@@ -57,3 +57,28 @@ class AccountInvoice(models.Model):
             'target': 'self',
             'url': '%s/sendcmd/%s'%(proxy_url, cmd.decode("utf-8"),),
         }
+
+    @api.multi
+    def send_credit_proxy(self):
+        self.ensure_one()
+        cmd = "iR%s"%(self.partner_id.vat,)
+        cmd += "\niS%s"%(self.partner_id.name,)
+        cmd += "\ni%s"%(self.partner_id.street,) if self.partner_id.street else ''
+        for line in self.invoice_line_ids:
+            if line.invoice_line_tax_ids:
+                tmp = '\nd1{:011.2f}{:09.3f}{}'.format(line.price_unit, line.quantity, line.name.replace('\n','')[:117])
+                cmd += tmp.replace('.','')
+            else:
+                tmp = '\nd0{:011.2f}{:09.3f}{}'.format(line.price_unit, line.quantity, line.name.replace('\n','')[:117])
+                cmd += tmp.replace('.','')
+        cmd += "\nf01"
+        cmd = b64encode(cmd.encode('utf-8'))
+        self.fiscal_printer_status = 'sent'
+        proxy_url = self.env['ir.config_parameter'].sudo().get_param(
+            'fiscal.printer.proxy.url', 'http://127.0.0.1:8080')
+        return {
+            'type': 'ir.actions.act_url',
+            'target': 'self',
+            'url': '%s/sendcmd/%s'%(proxy_url, cmd.decode("utf-8"),),
+        }
+    
