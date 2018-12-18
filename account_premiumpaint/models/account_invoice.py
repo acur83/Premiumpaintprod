@@ -63,6 +63,7 @@ class AccountInvoice(models.Model):
         self.ensure_one()
         cmd = "iR%s"%(self.partner_id.vat,)
         cmd += "\niS%s"%(self.partner_id.name,)
+        cmd += "\niFTBSR110004190-00005321"
         cmd += "\ni%s"%(self.partner_id.street,) if self.partner_id.street else ''
         for line in self.invoice_line_ids:
             if line.invoice_line_tax_ids:
