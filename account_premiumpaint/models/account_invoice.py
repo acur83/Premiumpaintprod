@@ -67,10 +67,10 @@ class AccountInvoice(models.Model):
         cmd += "\ni%s"%(self.partner_id.street,) if self.partner_id.street else ''
         for line in self.invoice_line_ids:
             if line.invoice_line_tax_ids:
-                tmp = '\nd1{:011.2f}{:09.3f}{}'.format(line.price_unit, line.quantity, line.name.replace('\n','')[:117])
+                tmp = '\nd1{:08.2f}{:05.3f}{}'.format(line.price_unit, line.quantity, line.name.replace('\n','')[:117])
                 cmd += tmp.replace('.','')
             else:
-                tmp = '\nd0{:011.2f}{:09.3f}{}'.format(line.price_unit, line.quantity, line.name.replace('\n','')[:117])
+                tmp = '\nd0{:08.2f}{:05.3f}{}'.format(line.price_unit, line.quantity, line.name.replace('\n','')[:117])
                 cmd += tmp.replace('.','')
         cmd += "\nf01"
         cmd = b64encode(cmd.encode('utf-8'))
