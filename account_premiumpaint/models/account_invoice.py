@@ -48,7 +48,8 @@ class AccountInvoice(models.Model):
                 tmp = '\n {:011.2f}{:09.3f}{}'.format(line.price_unit, line.quantity, line.name.replace('\n','')[:117])
                 cmd += tmp.replace('.','')
         cmd += "\n3\n1%s"%(self.payment_term_id and self.payment_term_id.fiscal_payment or '01')
-        cmd += "\nRU00000000000000"
+        if self.payment_term_id and self.payment_term_id.fiscal_payment == '16':
+            cmd += "\nRU00000000000000"
         cmd = b64encode(cmd.encode('utf-8'))
         self.fiscal_printer_status = 'sent'
         proxy_url = self.env['ir.config_parameter'].sudo().get_param(
