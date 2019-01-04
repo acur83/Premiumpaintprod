@@ -16,6 +16,7 @@
     ],
 
     'data': [
+        'views/report_templates.xml',
         'views/sales_team_view.xml',
     ],
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <template id="external_layout_standard" inherit_id="web.external_layout_standard">
+    <xpath expr="//div[@name='company_address']" position="replace">
+      <div class="col-xs-6" name="company_address">
+        <t t-if="doc and doc.warehouse_id and doc.warehouse_id.partner_id">
+          <span t-field="doc.warehouse_id.partner_id"
+          t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+          style="border-bottom: 1px solid black; display:inline-block;"/>
+        </t>
+        <t t-if="not (doc and doc.warehouse_id and doc.warehouse_id.partner_id)">
+          <span t-field="company.partner_id"
+            t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+            style="border-bottom: 1px solid black; display:inline-block;"/>
+        </t>
+      </div>
+    </xpath>
+  </template>
+</odoo>
