@@ -28,6 +28,6 @@
     <field name="view_id" ref="view_invoice_seller_report_wizard"/>
     <field name="target">new</field>
   </record>
-  <menuitem id="menu_invoice_seller_report" name="Lineas de Facturas por Vendedor" parent="account_premiumpaint.account_reports_premiumpaint_menu" sequence="110" action="action_invoice_seller_report"/>
+  <menuitem id="menu_invoice_seller_report" name="Comisiones especiales" parent="account_premiumpaint.account_reports_premiumpaint_menu" sequence="110" action="action_invoice_seller_report"/>
 </odoo>
 
