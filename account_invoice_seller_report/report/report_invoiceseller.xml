@@ -6,13 +6,13 @@
         <div class="page">
           <h2 class="text-center">Comisiones Especiales</h2>
           <div class="row mt32 mb32">
-            <div class="col-xs-2">
+            <div class="col-xs-3">
               <strong>Fecha Impresión</strong>:<br/>
               <t t-esc="datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')"/>
             </div>
             <div class="col-xs-3">
-              <strong>Reporte</strong>:<br/>
-              Del: <span t-esc="data['start_date']"/> Al: <span t-esc="data['end_date']"/>
+              <strong>Rango Reporte</strong>:<br/>
+              <span t-esc="data['start_date']"/> al <span t-esc="data['end_date']"/>
             </div>
             <div class="col-xs-3">
               <strong>Proveedor</strong>:<br/>
@@ -108,7 +108,9 @@
               <tr>
                 <td></td>
                 <td></td>
-                <td class="text-right" colspan="2"><strong>Total :</strong></td>
+                <td></td>
+                <td></td>
+                <td class="text-right" colspan="2"><strong>Totales :</strong></td>
                 <td class="text-right"><span t-esc="sum_amount_untaxed" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                 <td class="text-right"><span t-esc="sum_amount_tax" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                 <td class="text-right"><span t-esc="sum_sales_total" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
