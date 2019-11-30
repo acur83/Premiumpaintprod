@@ -28,17 +28,16 @@ class ReportInvoiceSeller(models.AbstractModel):
                     JOIN account_invoice ai ON ail.invoice_id=ai.id
                     WHERE ai.date_invoice >= %s
                         AND ai.date_invoice <= %s
-                        AND ai.type = %s
+                        AND ai.type IN ('out_invoice','out_refund')
                         AND ai.payment_type = %s
                         AND ai.user_id = %s
                         AND ai.state IN ('open','paid')
                         AND ail.product_id IN %s
                 """
-        args = (start_date, end_date, type,
-            payment_type, user_id, tuple(product_ids))
+        args = (start_date, end_date,payment_type, user_id, tuple(product_ids))
         cr.execute(query, args)
         result = [row[0] for row in self._cr.fetchall()]
-        return self.env['account.invoice.line'].browse(result)
+        return self.env['account.invoice.line'].browse(result).sorted(key=lambda r: r.invoice_id.date_invoice)
 
     @api.multi
     def get_report_values(self, docids, data=None):
