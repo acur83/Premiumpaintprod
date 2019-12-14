@@ -4,7 +4,7 @@
     <field name="name">invoice.seller.report.wizard.form</field>
     <field name="model">invoice.seller.report</field>
     <field name="arch" type="xml">
-      <form string="Facturas por Vendedor">
+      <form string="Facturas por Cliente">
         <group>
           <field name="start_date"/>
           <field name="end_date"/>
@@ -22,7 +22,7 @@
     </field>
   </record>
   <record id="action_invoice_seller_report" model="ir.actions.act_window">
-    <field name="name">Lineas de Factura por Vendedor</field>
+    <field name="name">Lineas de Factura por Cliente</field>
     <field name="res_model">invoice.seller.report</field>
     <field name="view_type">form</field>
     <field name="view_mode">form</field>
