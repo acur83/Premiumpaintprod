@@ -14,6 +14,7 @@ class ReportInvoiceSeller(models.AbstractModel):
         end_date = data.get('end_date', False) or fields.Date.context_today(self)
         user_id = data.get('user_id', False) and data.get('user_id', False)[0]
         supplier_id = data.get('supplier_id', False) and data.get('supplier_id', False)[0]
+        customer_id = data.get('customer_id', False) and data.get('customer_id', False)[0]
         domain = [('name','=',supplier_id)]
         supplierinfo = self.env['product.supplierinfo'].search(domain)
         product_tmpl_ids = [si.product_tmpl_id.id for si in supplierinfo]
@@ -24,7 +25,21 @@ class ReportInvoiceSeller(models.AbstractModel):
             return self.env['account.invoice.line']
 
         cr = self.env.cr
-        query = """ SELECT ail.id FROM account_invoice_line ail
+        if customer_id:
+            query = """ SELECT ail.id FROM account_invoice_line ail
+                    JOIN account_invoice ai ON ail.invoice_id=ai.id
+                    WHERE ai.date_invoice >= %s
+                        AND ai.date_invoice <= %s
+                        AND ai.partner_id <= %s
+                        AND ai.type IN ('out_invoice','out_refund')
+                        AND ai.payment_type = %s
+                        AND ai.user_id = %s
+                        AND ai.state IN ('open','paid')
+                        AND ail.product_id IN %s
+                """
+            args = (start_date, end_date, customer_id, payment_type, user_id, tuple(product_ids))
+        else:
+            query = """ SELECT ail.id FROM account_invoice_line ail
                     JOIN account_invoice ai ON ail.invoice_id=ai.id
                     WHERE ai.date_invoice >= %s
                         AND ai.date_invoice <= %s
@@ -34,7 +49,7 @@ class ReportInvoiceSeller(models.AbstractModel):
                         AND ai.state IN ('open','paid')
                         AND ail.product_id IN %s
                 """
-        args = (start_date, end_date,payment_type, user_id, tuple(product_ids))
+            args = (start_date, end_date,payment_type, user_id, tuple(product_ids))
         cr.execute(query, args)
         result = [row[0] for row in self._cr.fetchall()]
         return self.env['account.invoice.line'].browse(result).sorted(key=lambda r: r.invoice_id.date_invoice)

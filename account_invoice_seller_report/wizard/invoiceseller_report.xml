@@ -11,6 +11,7 @@
         </group>
         <group>
           <field name="supplier_id" domain="[('supplier','=',True)]"/>
+          <field name="customer_id" domain="[('customer','=',True)]"/>
           <field name="user_id" domain="[('sale_team_id','!=',False)]"/>
         </group>
         <footer>
