@@ -4,14 +4,21 @@
     <field name="name">invoice.seller.report.wizard.form</field>
     <field name="model">invoice.seller.report</field>
     <field name="arch" type="xml">
+<<<<<<< HEAD
       <form string="Facturas por Cliente">
+=======
+      <form string="Facturas por Vendedor">
+>>>>>>> 701f21aff508c9b25301695323e7eed1a462f58c
         <group>
           <field name="start_date"/>
           <field name="end_date"/>
         </group>
         <group>
           <field name="supplier_id" domain="[('supplier','=',True)]"/>
+<<<<<<< HEAD
           <field name="customer_id" domain="[('customer','=',True)]"/>
+=======
+>>>>>>> 701f21aff508c9b25301695323e7eed1a462f58c
           <field name="user_id" domain="[('sale_team_id','!=',False)]"/>
         </group>
         <footer>
@@ -22,7 +29,11 @@
     </field>
   </record>
   <record id="action_invoice_seller_report" model="ir.actions.act_window">
+<<<<<<< HEAD
     <field name="name">Lineas de Factura por Cliente</field>
+=======
+    <field name="name">Lineas de Factura por Vendedor</field>
+>>>>>>> 701f21aff508c9b25301695323e7eed1a462f58c
     <field name="res_model">invoice.seller.report</field>
     <field name="view_type">form</field>
     <field name="view_mode">form</field>
