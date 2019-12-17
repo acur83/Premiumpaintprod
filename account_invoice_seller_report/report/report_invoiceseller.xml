@@ -55,6 +55,9 @@
                   <strong>Subtotal</strong>
                 </th>
                 <th class="text-right">
+                  <strong>Margen(%)</strong>
+                </th>
+                <th class="text-right">
                   <strong>Impuesto</strong>
                 </th>
                 <th class="text-right">
@@ -67,11 +70,12 @@
               <t t-set="sum_amount_tax" t-value="0"/>
               <t t-set="sum_sales_total" t-value="0"/>
               <t t-foreach="get_report_user(data)" t-as="ail">
+                <t t-set="razon" t-value="(ail.price_unit / ail.product_id.standard_price) if ail.product_id.standard_price else 0.0"/>
+                <t t-set="margen" t-value="((razon - 1) if razon else 1.0) * 100"/>
                 <t t-if = "ail.invoice_id.type == 'out_invoice'">
                   <t t-set="origin" t-value="''"/>
                   <t t-set="price_subtotal" t-value="ail.price_subtotal"/>
                   <t t-set="price_total" t-value="ail.price_total"/>
-                  
                 </t>
                 <t t-if = "not ail.invoice_id.type == 'out_invoice'">
                   <t t-set="origin" t-value="ail.invoice_id.origin"/>
@@ -106,6 +110,9 @@
                   </td>
                   <td class="text-right">
                     <span t-esc="price_subtotal" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                  </td>
+                  <td class="text-right">
+                    <span t-esc="margen"/>%
                   </td>
                   <td class="text-right">
                     <span t-esc="amount_tax" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
