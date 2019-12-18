@@ -4,11 +4,7 @@
   <report
             id="action_report_invoiceseller"
             model="invoice.seller.report"
-<<<<<<< HEAD
             string="Comisiones Especiales por Cliente"
-=======
-            string="Comisiones Especiales"
->>>>>>> 701f21aff508c9b25301695323e7eed1a462f58c
             report_type="qweb-pdf"
             name="account_invoice_seller_report.report_invoiceseller"
             file="account_invoice_seller_report.report_invoiceseller"
