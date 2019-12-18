@@ -112,7 +112,7 @@
                     <span t-esc="price_subtotal" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
                   </td>
                   <td class="text-right">
-                    <span t-esc="margen"/>%
+                    <span t-esc="margen"  t-options="{'widget': 'float', 'precision': 2}"/>%
                   </td>
                   <td class="text-right">
                     <span t-esc="amount_tax" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
@@ -127,8 +127,10 @@
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
                 <td class="text-right" colspan="2"><strong>Totales :</strong></td>
                 <td class="text-right"><span t-esc="sum_amount_untaxed" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                <td></td>
                 <td class="text-right"><span t-esc="sum_amount_tax" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                 <td class="text-right"><span t-esc="sum_sales_total" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
               </tr>
