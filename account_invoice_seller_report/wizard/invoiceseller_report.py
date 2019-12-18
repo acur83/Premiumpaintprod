@@ -12,6 +12,7 @@ class InvoiceSellerReport(models.TransientModel):
     end_date = fields.Date(required=True, default=fields.Datetime.now)
     user_id = fields.Many2one('res.users', 'Vendedor', required=True)
     supplier_id = fields.Many2one('res.partner', 'Proveedor', required=True)
+    customer_id = fields.Many2one('res.partner', 'Cliente', required=True)
 
     @api.onchange('start_date')
     def _onchange_start_date(self):
@@ -26,5 +27,5 @@ class InvoiceSellerReport(models.TransientModel):
     @api.multi
     def generate_report(self):
         data = {}
-        data['form'] = self.read(['start_date', 'end_date', 'user_id', 'supplier_id'])[0]
+        data['form'] = self.read(['start_date', 'end_date', 'user_id', 'supplier_id', 'customer_id'])[0]
         return self.env.ref('account_invoice_seller_report.action_report_invoiceseller').report_action([], data=data)
